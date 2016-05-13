@@ -134,7 +134,7 @@ d3.json("code/lib/us.json", function(error, us) {
 
       draw(by_date[0]);
 
-    d3.csv("https://github.com/tderosa/flydeal/blob/gh-pages/data/domestic_airports.csv", function(error, airport_data) {
+    d3.csv("code/data/domestic_airports.csv", function(error, airport_data) {
       // Draw airports
       airportGroup.selectAll("circle")
          .data(airport_data)

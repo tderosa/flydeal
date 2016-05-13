@@ -37,7 +37,7 @@ var day_set = [];
 var depart_time_set = [];
 var on_time_set = [];
 
-d3.csv('https://github.com/tderosa/flydeal/blob/gh-pages/data/outputs/price_averages.csv', function(error, data){
+d3.csv('code/data/outputs/price_averages.csv', function(error, data){
   data.forEach(function(d) {
     var i, flight_info;
 
