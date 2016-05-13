@@ -46,7 +46,7 @@ d3.json("code/lib/us.json", function(error, us) {
     .attr("d", path);
 
 
-  d3.csv("../data/outputs/mon_year_delays.csv", function(error, mon_data) {
+  d3.csv("data/outputs/mon_year_delays.csv", function(error, mon_data) {
     // cast data to proper types
     for (var i=0;i<mon_data.length;i++) {
       d = mon_data[i];
