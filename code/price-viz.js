@@ -1,5 +1,5 @@
 var weekday_names = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
-
+console.log("ugh");
 var flights = {};
 var flight_array = [];
 
@@ -23,12 +23,12 @@ var yAxis = d3.svg.axis()
     .scale(y)
     .orient("left");
 
-var chart = d3.select("body").append("svg")
+var chart = d3.select("#priceviz").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
     .attr("class", "chart");
     
-var svg = chart
+var svg2 = chart
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -70,7 +70,7 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
 
   y.domain([100, 500])
 
-  svg.selectAll("circle")
+  svg2.selectAll("circle")
       .data(flight_array)
       .enter().append("circle")
       .attr("class", "dot")
@@ -82,7 +82,7 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
         return y(d["price"]);
       });
 
-  svg.append("g")
+  svg2.append("g")
       .attr("class", "x axis")
       .attr("transform", "translate(0," + height + ")")
       .call(xAxis)
@@ -93,7 +93,7 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
       .style("text-anchor", "end")
       .text("Departure Time");
 
-  svg.append("g")
+  svg2.append("g")
       .attr("class", "y axis")
       .call(yAxis)
       .append("text")
@@ -109,7 +109,7 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
   function updatePoints(dataset) {
     xAxis = d3.svg.axis().scale(x).orient("bottom");
 
-    svg.selectAll("circle")
+    svg2.selectAll("circle")
       .data(dataset)  // Update with new data
       .transition()  // Transition from old to new
       .duration(1000)  // Length of animation
@@ -137,13 +137,13 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
       });
 
     // Update X Axis
-    svg.select(".x.axis")
+    svg2.select(".x.axis")
         .transition()
         .duration(1000)
         .call(xAxis);
 
     // Update Y Axis
-    svg.select(".y.axis")
+    svg2.select(".y.axis")
         .transition()
         .duration(100)
         .call(yAxis);
