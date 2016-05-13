@@ -3,8 +3,8 @@ CS1951a Final Project -- ajb7, kb25, tderosa, ybao1
 
 All Visualizations: http://tderosa.github.io/flydeal/
 
-Delay Visualzation can also be viewed by opening code/delay_viz/delay-viz.html
-Price Visualzation can also be viewed by opening code/price_viz/price-viz.html
+Delay Visualization can also be viewed by opening code/delay_viz/delay-viz.html
+Price Visualization can also be viewed by opening code/price_viz/price-viz.html
 
 DATA SCRAPING:
 	1. python scrap_skypicker.py - Scrapes data from the Skypicker API and saves it to flight_data_big.json in data/
