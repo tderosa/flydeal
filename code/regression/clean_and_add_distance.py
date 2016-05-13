@@ -70,7 +70,7 @@ with open('../../data/outputs/clean_price_data.csv', 'rb') as f:
 			count += 1
 
 
-with open('regressions.csv', 'wb') as fw:
+with open('../../data/outputs/regressions.csv', 'wb') as fw:
 	writer = csv.writer(fw)
 	writer.writerow(['duration', 'distance', 'week score', 'price'])
 	writer.writerows(result_list)
