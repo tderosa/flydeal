@@ -31,7 +31,7 @@ var scale = d3.scale.threshold()
   .domain([15,30,60,90])
   .range(colors); 
 
-d3.json("https://github.com/tderosa/flydeal/blob/gh-pages/code/lib/us.json", function(error, us) {
+d3.json("code/lib/us.json", function(error, us) {
   // DRAW MAP -- Mike Bostock's TopoJSON code
   stateGroup.append("g")
     .attr("id", "states")
@@ -46,7 +46,7 @@ d3.json("https://github.com/tderosa/flydeal/blob/gh-pages/code/lib/us.json", fun
     .attr("d", path);
 
 
-  d3.csv("https://github.com/tderosa/flydeal/blob/gh-pages/code/data/outputs/mon_year_delays.csv", function(error, mon_data) {
+  d3.csv("code/data/outputs/mon_year_delays.csv", function(error, mon_data) {
     // cast data to proper types
     for (var i=0;i<mon_data.length;i++) {
       d = mon_data[i];
