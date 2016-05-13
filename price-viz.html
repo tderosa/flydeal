@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<head>
+<style>
+
+body {
+  font: 10px sans-serif;
+}
+
+select {
+	display: block;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.dot {
+  fill: #42AFB6;
+}
+
+</style>
+</head>
+<body>
+<h1>PRICE x FEATURE</h1>
+<select id="feature">
+  <option value="most_common_depart_time">Departure Time</option>
+  <option value="most_common_depart_day">Day of the Week</option>
+  <option value="duration">Duration</option>
+  <option value="avg_on_time">On Time Percentage</option>
+</select>
+<script src="//d3js.org/d3.v3.min.js"></script>
+<script src="//code.jquery.com/jquery-2.2.3.min.js"></script>
+<script src="code/price-viz.js"></script>
