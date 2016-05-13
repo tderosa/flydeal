@@ -32,21 +32,27 @@ var svg = chart
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+// Setup datasets of (feature, price) point pairs
 var duration_set = [];
 var day_set = [];
 var depart_time_set = [];
 var on_time_set = [];
 
+// Open CSV of  airline flight routes, each with a unique (Flight #, Airline) pair
 d3.csv('../../data/outputs/price_averages.csv', function(error, data){
   data.forEach(function(d) {
     var i, flight_info;
 
+    // Unique identifier made up of Flight # and Airline
     var fid = d["flight_no"]+"_"+d["airline"];
 
+    // Store feature set and parse applicable feature values
     flight_info = d;
     flight_info["duration"] = parseFloat(d.duration);
     flight_info["price"] = parseFloat(d.price);
     flight_info["avg_on_time"] = parseFloat(d.avg_on_time);
+    
+    // Set weekday index in range 0-6, when 0 represents Monday and 6 represents Sunday
     flight_info["day_index"] = weekday_names.indexOf(flight_info["most_common_depart_day"])
 
     var date = new Date();
@@ -58,18 +64,23 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
     flights[fid] = flight_info;
     flight_array.push(flight_info);
 
+    // Add each coordinate pair to the appropriate dataset
     duration_set.push([flight_info["duration"], flight_info["price"]]);
     day_set.push([flight_info["day_index"], flight_info["price"]]);
     depart_time_set.push([flight_info["most_common_depart_time"], flight_info["price"]]);
     on_time_set.push([flight_info["avg_on_time"], flight_info["price"]]);
   });
 
+  // Begin with Departure Time vs. Price graph
   var start = d3.min(flight_array, function(d) {return d["most_common_depart_time"]});
   var end = d3.max(flight_array, function(d) {return d["most_common_depart_time"]});
   x.domain([start, end]);
 
+  // Ignore outlier prices to make the most relevant visualization
   y.domain([100, 500])
 
+
+  // Add points
   svg.selectAll("circle")
       .data(flight_array)
       .enter().append("circle")
@@ -105,7 +116,7 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
       .text("Price")
 
 
-  
+  // Point animations from: http://bl.ocks.org/WilliamQLiu/bd12f73d0b79d70bfbae
   function updatePoints(dataset) {
     xAxis = d3.svg.axis().scale(x).orient("bottom");
 
@@ -149,10 +160,13 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
         .call(yAxis);
   }
 
+  // Change x-axis and update points to new dataset when feature is changed
   function changeFeature(feature) {
     start = d3.min(flight_array, function(d) {return d[feature]});
     end = d3.max(flight_array, function(d) {return d[feature]});
     
+    // Depending on what feature is selected, choose the appropriate 
+    // dataset, domain, and scale, then update all the points
     switch(feature) {
       case "duration":
         x = d3.scale.linear().range([0, width]);
@@ -182,6 +196,7 @@ d3.csv('../../data/outputs/price_averages.csv', function(error, data){
     }
   }
 
+  // When new dropdown value selected call changeFeature with new feature
   $("#feature").change(function(event) {
     changeFeature($("#feature").val());
   });
