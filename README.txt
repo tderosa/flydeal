@@ -15,3 +15,9 @@ ybao1
 	REGRESSIONS
 	5. python linear_regression.py - Runs multiple linear regression on the regressions.csv in data/outputs. It prints out the score, but I commented out K-fold cross validation. It also defines the error tickets based on the result of the predictions and categorized the existing dataset into a new dataset for the logistic regression analysis on error tickets and saves the dataset to logreg.csv in data/outputs/. Finally, it plots the linear relation between price and duration, and price and distance.
 	6. python regressions.py - It runs logistic regression on the logreg.csv in data/outputs to predict whether the ticket is an error ticket. I commented out K-fold cross validation and other classifiers like linear SVC, Naive Bayes etc... It produces the scatterplot of the error tickets vs duration and distance.
+
+ajb7
+  Flight Route Averaging and Price Trend Visualization
+
+  	DATA CLEANING:
+  	7. python calculate_avg.py flight_price_unclean_data.csv - Calculates the average or most common value (when applicable) from data in the format of data/outputs/unclean_flight_price.csv using (Airline, Flight #) pairs as the unique identifier compute averages for each airline's various flight routes, then saves these averages to data/outputs/cleaned_flight_averages.csv.
