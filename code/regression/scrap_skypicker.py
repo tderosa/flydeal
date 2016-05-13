@@ -3,6 +3,7 @@ from urllib2 import urlopen
 import time
 from datetime import datetime
 
+# SCRAP FROM SKYPICKER
 
 URL = 'https://api.skypicker.com/flights?flyFrom=BOS&dateFrom=10/6/2016&dateTo=12/6/2016&typeFlight=oneway&directFlights=1'
 START_DATE = datetime.today()
@@ -38,6 +39,8 @@ def get_list():
 	return content_list
 
 
+# CLEAN THE DATA
+
 def formulate_json(data_list):
 	cleaned_list = []
 	for data in data_list:
@@ -61,7 +64,7 @@ def formulate_json(data_list):
 
 
 
-
+# WRITE TO FILES
 
 def main():
 
@@ -70,7 +73,7 @@ def main():
 	# print len(flight_list)
 	cleaned_data = formulate_json(flight_list)
 
-	with open('flight data new.json', 'w') as f:
+	with open('../../data/flight_data_big.json', 'w') as f:
 		f.write(cleaned_data)
 
 	print 'done!'

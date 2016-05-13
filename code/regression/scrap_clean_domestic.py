@@ -7,7 +7,7 @@ from datetime import datetime, date
 
 API_KEY = 'WXBYVAZYbBQDwuBpdmhvYf23YtD5UaWj'
 
-TO = ['MIA', 'MCO']
+TO = ['MIA', 'MCO', 'ATL', 'LAX', 'PHL', 'ORD', 'DFW', 'DEN', 'SFO']
 FROM = 'BOS'
 
 START_DATE = datetime.today()
@@ -28,7 +28,7 @@ def get_list():
 			posix = time.mktime(START_DATE.timetuple())
 
 			for day in range(DAYS_PER_YEAR):
-				print 'Day ' + str(day) + ' --- ' + to_airport
+				print ('Day ' + str(day) + ' --- ' + to_airport)
 				posix += 86400
 				utc_date = datetime.utcfromtimestamp(posix)
 				date_str = utc_date.strftime("%Y-%m-%d")
@@ -39,7 +39,7 @@ def get_list():
 					content = urlopen(url).read()
 					index = content.index('{')
 				except Exception, e:
-					print 'url error'
+					print ('url error')
 					pass
 
 				try:
@@ -51,12 +51,15 @@ def get_list():
 					leg_list += data.get('legs')
 					offer_list += data.get('offers')
 				except Exception, e:
-					print 'Ah!'
+					print ('Ah!')
 					pass
 	except Exception, e:
 		pass
 
 	return (leg_list, offer_list)
+
+
+# CLEAN AND RETURN THE DOMESTIC FLIGHT DATA
 
 def formulate_all(data_tuple):
 	result_list = []
@@ -101,7 +104,7 @@ def formulate_all(data_tuple):
 			meal = seg.get('meal')
 
 		except Exception, e:
-			print 'Ahh'
+			print ('Ahh')
 			pass
 		result_list.append([price, airline_name, flight_number, departure_airport, departure_city, arrival_airport, arrival_city, departure_time, equipment_code, equipment_desc, on_time_percentage, distance, duration, meal])
 
@@ -130,7 +133,7 @@ def formulate_decision(data_tuple):
 			result_list.append([price, num_of_week])
 
 		except Exception, e:
-			print 'Ahh'
+			print ('Ahh')
 			pass
 
 	return result_list
@@ -157,7 +160,7 @@ def formulate_lin_decision(data_tuple):
 			result_list.append([price, num_of_week])
 
 		except Exception, e:
-			print 'Ahh'
+			print ('Ahh')
 			pass
 
 	return result_list
@@ -184,7 +187,7 @@ def formulate_regression(data_tuple):
 			on_time_percentage = seg.get('onTimePercentage')
 			distance = seg.get('distance')
 			duration = seg.get('duration')
-			print duration
+			print (duration)
 			# clean duration
 			pattern = r'PT(\d+H)*(\d+M)*'
 			prog = re.compile(pattern)
@@ -200,25 +203,26 @@ def formulate_regression(data_tuple):
 			if on_time_percentage:
 				result_list.append([price, duration, distance, on_time_percentage])
 		except Exception, e:
-			print 'Ah'
+			print ('Ah')
 			pass
 
 	return result_list
 
 
+# WRITE THE CLEANED DOMESTIC DATA
 
 def main():
-	print 'start scraping...'
+	print ('start scraping...')
 	flight_list = get_list()
 
 	cleaned_data = formulate_all(flight_list)
-	print cleaned_data
+	print (cleaned_data)
 
-	with open('flight_data_full_big4.csv', 'wb') as f:
+	with open('../../data/outputs/clean_domestic_flight.csv', 'wb') as f:
 		writer = csv.writer(f)
 		writer.writerow(['price', 'airline name', 'flight number', 'departure airport', 'departure city', 'arrival airport', 'arrival city', 'departure time', 'equipment code', 'equipment desc', 'on time percentage', 'distance', 'duration', 'meal'])
 		writer.writerows(cleaned_data)
-	print 'done!'
+	print ('done!')
 
 
 if __name__ == '__main__':

@@ -11,8 +11,10 @@ result_list = []
 indices = [3, 8]
 count = 1
 
+
+# STORE THE WEEK PRICE IN THE MEMORY
 week_price = {}
-with open('week_price.csv', 'rb') as f:
+with open('../../data/outputs/week_price.csv', 'rb') as f:
 	reader = csv.reader(f)
 	next(reader, None)
 	for row in reader:
@@ -24,7 +26,10 @@ with open('week_price.csv', 'rb') as f:
 			week_price[week].append(price)
 
 
-with open('clean_data_1.csv', 'rb') as f:
+# FOR EVERY FLIGHT DATA, NEED TO FIND THE DISTANCE DATA FROM distance24.org API AND ADD IT TO THE DATASET
+# RETURNS THE DATA FOR LINEAR REGRESSION
+
+with open('../../data/outputs/clean_price_data.csv', 'rb') as f:
 	reader = csv.reader(f)
 	next(reader, None)
 	for row in reader: 
@@ -65,7 +70,7 @@ with open('clean_data_1.csv', 'rb') as f:
 			count += 1
 
 
-with open('regression1.csv', 'wb') as fw:
+with open('regressions.csv', 'wb') as fw:
 	writer = csv.writer(fw)
 	writer.writerow(['duration', 'distance', 'week score', 'price'])
 	writer.writerows(result_list)

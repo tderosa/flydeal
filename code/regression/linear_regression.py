@@ -7,13 +7,15 @@ import matplotlib.pyplot as plt
 
 
 
-data = np.loadtxt(open('regression_week.csv', 'r'), delimiter=',', skiprows=1)
+data = np.loadtxt(open('../../data/outputs/regressions.csv', 'r'), delimiter=',', skiprows=1)
 
+# NORMALIZATION
 data = data/data.max(axis=0)
 
 
-
+# SHUFFLE THE DATA
 # np.random.shuffle(data)
+
 # cross validation
 
 # X = data[:1000, 2:3]
@@ -22,14 +24,17 @@ data = data/data.max(axis=0)
 # final_score = []
 # final_coef = np.array([0.,0.,0.])
 # final_intercept = []
-# folds= 10
 
+
+# K FOLD CROSS VALIDATION
+
+# folds= 10
 # kf = cross_validation.KFold(len(X), n_folds=folds)
 # for train, test in kf:
 # 	X_train, X_test, y_train, y_test = X[train], X[test], y[train], y[test]
 
 
-train_index = int(len(data) * 0.95)
+train_index = int(len(data) * 0.7)
 X_train = data[:train_index, :3]
 y_train = data[:train_index, 3:]
 X_test = data[train_index:, :3]
@@ -51,16 +56,13 @@ data_sm = data[train_index:, :]
 	# plt.show()
 
 
-# log reg
 
-# log_reg = LogisticRegression(normalize=True)
-# log_reg.fit(X_train, y_train)
-
-
-# lin reg
+# FIT LINEAR REGRESSION MODEL USING ELASTICNET
+print('Fitting linear regression model...')
 
 lin_reg = ElasticNet(alpha=0.00001, l1_ratio=0.2)
 lin_reg.fit(X_train, y_train)
+
 # print ('score: ' + str(lin_reg.score(X_test, y_test)))
 # print(lin_reg.coef_)
 # print(lin_reg.intercept_)
@@ -74,26 +76,25 @@ lin_reg.fit(X_train, y_train)
 # mean_intercept = np.mean(final_intercept)
 
 
-# predict
-
-
-
 # lin_reg.coef_ = mean_coef
 # lin_reg.intercept_ = mean_intercept
 
 
-# log reg
-
+# LABEL NEW ERROR TICKET LABELS ON EXISTING DATA
 
 y_new = lin_reg.predict(X_test)
 
 # print(lin_reg.coef_)
-print('final score: ' + str(lin_reg.score(X_test, y_test)))
+print('final score for linear Elastic Net: ' + str(lin_reg.score(X_test, y_test)))
 
+
+# DEFINITION FOR ERROR TICKET
 
 rate = 0.7
 lower = y_new * (1-rate)
 result = np.expand_dims((np.squeeze(y_test) - lower) < 0, axis=1)
+
+
 # results = np.array(results)
 # plt.scatter(X_test, y_test, color='black', s=1)
 # plt.plot(X_test, y_new, color='blue')
@@ -109,10 +110,12 @@ result = np.expand_dims((np.squeeze(y_test) - lower) < 0, axis=1)
 # result = np.subtract(y_test, lower)
 # print(result.shape)
 
-new_result = np.concatenate((data_sm, result), axis=1)
-print(new_result)
+# WRITE OUT NEW LABELED DATASET
 
-with open('logreg3.csv', 'w') as f:
+new_result = np.concatenate((data_sm, result), axis=1)
+# print(new_result)
+
+with open('../../data/outputs/logreg.csv', 'w') as f:
 	writer = csv.writer(f)
 	writer.writerow(['duration', 'distance', 'week score', 'price', 'error ticket'])
 	writer.writerows(new_result)
@@ -142,3 +145,30 @@ with open('logreg3.csv', 'w') as f:
 
 
 
+# PLOT price vs duration with Linear regression line
+X_train = data[:train_index, :1]
+y_train = data[:train_index, 3:]
+X_test = data[train_index:, :1]
+y_test = data[train_index:, 3:]
+lin_reg.fit(X_train, y_train)
+plt.scatter(X_test, y_test, color='black', s=1)
+plt.plot(X_test, lin_reg.predict(X_test), color='blue')
+plt.ylabel('price (USD)')
+plt.xlabel('duration')
+plt.xticks()
+plt.yticks()
+plt.show()
+
+# PLOT price vs distance with Linear regression line
+X_train = data[:train_index, 1:2]
+y_train = data[:train_index, 3:]
+X_test = data[train_index:, 1:2]
+y_test = data[train_index:, 3:]
+lin_reg.fit(X_train, y_train)
+plt.scatter(X_test, y_test, color='black', s=1)
+plt.plot(X_test, lin_reg.predict(X_test), color='blue')
+plt.ylabel('price (USD)')
+plt.xlabel('distance')
+plt.xticks()
+plt.yticks()
+plt.show()
