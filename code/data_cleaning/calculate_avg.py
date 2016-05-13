@@ -62,7 +62,7 @@ def main():
 					"most_common_depart_time", "most_common_meal", "most_common_equipment", "avg_on_time",
 					"departure airport", "departure city", "arrival airport", "arrival city"]
 		
-		with open("averages.csv", 'wb') as fw:
+		with open("../../data/outputs/cleaned_flight_averages.csv", 'wb') as fw:
 			writer = csv.writer(fw)
 			writer.writerow(headers)
 
