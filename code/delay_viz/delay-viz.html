@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700,300' rel='stylesheet' type='text/css'>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="../lib/d3.slider.css" />  
+  <link rel="stylesheet" href="delay-style.css">
+</head>
+<body>
+  <div class="container" id="title">
+  <h1>AVERAGE DELAY BY ROUTE <span class="subheader"> Feb 2013 - Jan 2016</span></h1>
+  <hr>
+  </div>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-2">
+            <h1 id="current_time">Feb 2013</h1>
+          </div>
+          <div class="col-md-9">
+            <p>DELAYS BY DATE</p>
+            <div id="axis"></div>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">
+              <div class="row">
+                <h4 class="col-md-12" style="margin-top:50px">MINUTES DELAYED</h4>
+              </div>
+              <div class="row-spacing row">
+                  <div class="legend-block a col-md-3"></div>
+                  <div class="col-md-6">&#60; 15</div>
+                  <div class="legend-block b col-md-3"></div>
+                  <div class="col-md-6">15 - 30</div>
+                  <div class="legend-block c col-md-3"></div>
+                  <div class="col-md-6">30 - 60</div>
+                  <div class="legend-block d col-md-3"></div>
+                  <div class="col-md-6">60 - 90</div>
+                  <div class="legend-block e col-md-3"></div>
+                  <div class="col-md-6">&#62; 90 </div>
+              </div>
+              <div class="row">
+                <h4 class="col-md-12" style="margin-top:50px">AIRPORT</h4>
+                <p class="lil-note"><i>Click to select an individual airport</i></p>
+              </div>
+              <div class="row-spacing row">
+                <div class="col-md-12">
+                  <h1 id="current_airport">All</h1>
+                </div>
+              </div>
+            </div>
+        <div class="col-md-10">
+          <div id="viz"></div>
+        </div>
+        <div class="row">
+          <h6 class="note col-md-12"><i><a href="http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time">Department of Transportation Delay Dataset, February 2013 - January 2016</a></i></h6>
+        </div>
+      </div>
+
+      <script src="http://d3js.org/d3.v3.min.js"></script>
+      <script src="http://d3js.org/d3.geo.projection.v0.min.js"></script>
+      <script src="http://d3js.org/topojson.v1.min.js"></script>
+      <script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+      <script src="../lib/d3.slider.js"></script>
+      <script src="../lib/topojson.v1.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ==" crossorigin="anonymous"></script>
+      <script src="http://d3-legend.susielu.com/d3-legend.min.js"></script>
+      <script src="interactive-routes.js"></script>
+  </body>
+</html>

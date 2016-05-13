@@ -1,0 +1,25 @@
+All our cleaned data is handed in with the project. Because we analyzed around 16 million flights and we computed averages based on flight route (explained in methodology section of report), we have only included the cleaned data. You can also find the cleaned data at https://github.com/tderosa/flydeal.
+
+
+The unclean data was pulled from:
+
+Department of Transportation - http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time
+Expedia - http://hackathon.expedia.com/node/411
+SkyPicker - 
+OpenFlights - http://openflights.org/data.html
+
+Explanation of data:
+
+domestic_airports.csv - lat/lon values for each US airport, taken from OpenFlights 
+dow_delays.csv - average flight delay for each route by day of the week 
+mon_year_delays.csv - average flight delay for each route by month and year 
+time_delays.csv - average flight delay for each route by time of day 
+price_averages.csv - average price for each flight 
+unclean_flight_price.csv - price for each flight (when cleaned outputs as price_averages.csv)
+clean_price_data.csv - 
+logreg.csv - 
+regressions.csv - 
+week_price.csv - 
+flight_data_big.json - 
+flight_data_small.json - 
+
