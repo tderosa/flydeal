@@ -8,12 +8,12 @@ from datetime import datetime
 from datetime import timedelta
 from collections import defaultdict
 
-
+# Intializations
 flight_times = defaultdict(list)
 flight_delays = defaultdict(lambda: (0, 0.0, 0.0))
-mon_year_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, month, year) --> list of delay vals
-dow_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, day_of_week) --> list of delay vals
-time_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, time_of_day) --> list of delay vals
+mon_year_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, month, year) --> (num_delays, sum_delays, max_delay)
+dow_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, day_of_week) --> (num_delays, sum_delays, max_delay)
+time_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, time_of_day) --> (num_delays, sum_delays, max_delay)
 expected_heading = ["YEAR","MONTH","DAY_OF_MONTH","ORIGIN","DEST","CRS_DEP_TIME","DEP_DELAY", ""]
 
 
@@ -28,6 +28,7 @@ def main():
         flight_times[(entry['from_airport'], entry['to_airport'])].append(dt.replace(year=1900, month=1, day=1))
         
 
+    # read in flight data
     delay_files = os.listdir(to_clean_path)
     for fname in delay_files:
         path = to_clean_path + fname
@@ -36,12 +37,16 @@ def main():
             data = csv.reader(f)
             heading = next(data, None)
 
+            # make sure the csv is in the correct format
             assert (heading == expected_heading), "csv format incorrect"
 
             for d in data:
+                # get delay value
                 delay = float(d[6]) if (d[6] != "") else 0.0
+                # make datetime object for flight departure time
                 dt = dt.combine(datetime(int(d[0]), int(d[1]), int(d[2])), datetime.strptime(d[5], "%H%M").time())
 
+                # write to delay dictionaries
                 myd = mon_year_del[(d[3], d[4], dt.month, dt.year)]
                 mon_year_del[(d[3], d[4], dt.month, dt.year)] = (myd[0] + 1, myd[1] + delay)
                 dd = dow_del[(d[3], d[4], dt.weekday())]
@@ -49,6 +54,7 @@ def main():
                 td = time_del[(d[3], d[4], dt.hour)] 
                 time_del[(d[3], d[4], dt.hour)] = (td[0] + 1, td[1] + delay)
 
+                # write to flight delay dictionary
                 flight_key = (d[3], d[4])
                 if flight_key in flight_times:
                     delay_time = datetime.strptime(d[5], "%H%M")
@@ -65,6 +71,7 @@ def main():
     dow_f = output_path + "dow_delays_init.csv"
     time_f = output_path + "time_delays_init.csv"
 
+    # write to intial flight output file
     openas = "wb" if overwrite else "a"
     with open(price_f, openas) as fout:
         writer = csv.writer(fout)
@@ -89,6 +96,7 @@ def main():
 
     fout.close()
 
+    # write to all initial delay output files
     with open(m_y_f, openas) as fout:
         writer = csv.writer(fout)
 

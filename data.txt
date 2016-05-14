@@ -5,7 +5,7 @@ The unclean data was pulled from:
 
 Department of Transportation - http://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time
 Expedia - http://hackathon.expedia.com/node/411
-SkyPicker - 
+SkyPicker - skypicker.com
 OpenFlights - http://openflights.org/data.html
 
 Explanation of data:
@@ -16,10 +16,7 @@ mon_year_delays.csv - average flight delay for each route by month and year
 time_delays.csv - average flight delay for each route by time of day 
 price_averages.csv - average price for each flight 
 unclean_flight_price.csv - price for each flight (when cleaned outputs as price_averages.csv)
-clean_price_data.csv - 
-logreg.csv - 
-regressions.csv - 
-week_price.csv - 
-flight_data_big.json - 
-flight_data_small.json - 
+clean_price_data.csv - cleaned and aggregated price and delay data
+flight_data_big.json - full price dataset
+flight_data_small.json - subset of price data
 

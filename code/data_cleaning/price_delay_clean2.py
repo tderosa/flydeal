@@ -16,7 +16,7 @@ mon_year_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, month, year) --> lis
 dow_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, day_of_week) --> list of delay vals
 time_del = defaultdict(lambda: (0, 0.0)) # (orig, dest, time_of_day) --> list of delay vals
 
-
+# read in any initial delay file
 def readInit(fname, dictionary):
     with open(fname) as fil:
         reader = csv.reader(fil)
@@ -29,7 +29,7 @@ def readInit(fname, dictionary):
             dictionary[key] = (curr[0] + num, curr[1] + tot)
 
 def main():
-    
+    # read in initial price delay file
     with open(price_delay_init) as flight_f:
         reader = csv.reader(flight_f)
         flight_heading = next(reader, None)
@@ -42,6 +42,7 @@ def main():
             flight_delays[key] = (fd[0] + num, fd[1] + tot, newMaxD)
 
 
+    # read in all intial delay files
     readInit(mon_year_init, mon_year_del)
     readInit(dow_init, dow_del)
     readInit(time_init, time_del)
@@ -50,6 +51,7 @@ def main():
         reader = csv.reader(f)
         next(reader, None)
 
+        # get lat long values for airports
         for loc in reader:
             airport_loc[loc[0]] = (loc[1], loc[2])
 
@@ -58,7 +60,7 @@ def main():
     dow_f = output_path + "dow_delays.csv"
     time_f = output_path + "time_delays.csv"
 
-
+    # combine all values and write to final output files
     with open(price_f, 'wb') as fout:
         writer = csv.writer(fout)
 
